@@ -26,4 +26,5 @@ public :
 TEST_F(BaseballTexture, ThrowExceptionInvalidInput) {
 	assertIllegalArgument("12");
 	assertIllegalArgument("12s");
+	assertIllegalArgument("121");
 }
