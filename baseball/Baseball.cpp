@@ -46,23 +46,47 @@ public:
 		}
 	}
 
-	bool CheckAnswer(const string& guessNumber)
+	int checkStrikeCount(const string& guessNumber)
 	{
-		return guessNumber == answer;
+		int count = 0;
+		for(int i = 0; i < 3; i++)
+		{
+			if(guessNumber[i] == answer[i])
+			{
+				count++;
+			}
+		}
+		return count;
+	}
+
+	int checkBallCount(const string& guessNumber)
+	{
+		int count = 0;
+		for(int i = 0; i < 3; i++)
+		{
+			for(int j = 0; j < 3; j++)
+			{
+				if (i == j) continue;
+				if (guessNumber[i] == answer[j])
+					count++;
+			}
+		}
+		return count;
 	}
 
 	GuessResult guess(const string& guessNumber)
 	{
 		assertIllegalArgument(guessNumber);
 		GuessResult res;
-		if(CheckAnswer(guessNumber) == true)
+		res.strikes = checkStrikeCount(guessNumber);
+		if(res.strikes == 3)
 		{
-			res.solved = true;
-			res.strikes = 3;
 			res.balls = 0;
+			res.solved = true;
 			return res;
 		}
-		
+		res.solved = false;
+		res.balls = checkBallCount(guessNumber);
 		return res;
 	}
 
